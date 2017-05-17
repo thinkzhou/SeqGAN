@@ -156,6 +156,10 @@ def main():
             print 'total_batch: ', total_batch, 'test_loss: ', test_loss
             log.write(buffer)
 
+            saver = tf.train.Saver()
+            save_path = saver.save(sess, "./save/model.ckpt")
+            print("Model saved in file: %s" % save_path)
+
         # Update roll-out parameters
         rollout.update_params()
 
