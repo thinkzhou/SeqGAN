@@ -2,13 +2,18 @@ import os.path
 
 DATADIR = "./poem"
 
+def is_poem(line):
+    for w in line:
+        if w == "<R>":
+            return False
+    return True
 
 def create_vocab(train_file):
     vocab = set()
     with open(train_file, 'r') as f:
         for line in f:
             line = line.replace('\t', ' ').split()
-            if len(line) == 20:
+            if len(line) == 20 and is_poem(line):
                 for w in line:
                     vocab.add(w)
     return vocab
@@ -20,7 +25,7 @@ def map_data(vocab_map, in_file, out_file):
         for line in f:
             idxs = []
             line = line.replace('\t', ' ').split()
-            if len(line) == 20:
+            if len(line) == 20 and is_poem(line):
                 for w in line:
                     idx = vocab_map.get(w)
                     idxs.append(idx)
